@@ -1,12 +1,17 @@
 <script>
-  import RewardFunctions from "./RewardFunctions.js";
+  import { createEventDispatcher } from "svelte";
   let Bar;
 
   let countdown;
 
   export let Time = 5;
-  export let Active = false;
-  export let Reward;
+  export let Active;
+
+  const dispatch = createEventDispatcher();
+
+  function finished() {
+    dispatch("actionFinish", { state: "3" });
+  }
 
   function stop() {
     clearTimeout(countdown);
@@ -19,11 +24,7 @@
     let cooldown = Time * 1000;
     countdown = setTimeout(function tick() {
       if (Bar.style.width == "100%") {
-        Object.keys(Reward).forEach((rewardType) => {
-          Reward[rewardType].forEach((reward) => {
-            RewardFunctions[rewardType](reward.Stat, reward.Amount);
-          });
-        });
+        finished();
         Bar.style.transition = "width 0s linear";
         Bar.style.width = "0%";
         cooldown = 10;
@@ -36,7 +37,7 @@
     }, 0);
   }
 
-  function change(node, Active) {
+  function change() {
     run();
     return {
       update(Active) {
@@ -50,7 +51,10 @@
   }
 </script>
 
-<div use:change={Active} class=" relative w-full h-2 bg-gray-400">
+<div
+  use:change={Active}
+  class=" relative w-full h-2 bg-gray-400"
+>
   <div bind:this={Bar} class="ProgressBar h-full absolute w-0" />
 </div>
 

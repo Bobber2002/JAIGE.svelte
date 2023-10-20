@@ -56,5 +56,17 @@ function doing() {
     }
 }
 
+function page() {
+    const { subscribe, set, update } = writable("Hunt")
+
+    return {
+        subscribe,
+        set,
+        update,
+        change: (to) => { update((n) => { return n = to }) }
+    }
+}
+
 export const STATS = stats()
 export const DOING = doing()
+export const PAGE = page()

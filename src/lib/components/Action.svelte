@@ -1,13 +1,33 @@
 <script>
+  import RewardFunctions from "./RewardFunctions.js";
   import { DOING } from "$lib/Data.js";
 
   import DefaultImage from "$lib/images/512.png";
   import ProgressBar from "./ProgressBar.svelte";
 
+  let Active = $DOING == $$props.id && true;
+  $: Active = $DOING == $$props.id && true;
+
   export let Name = "Action Name",
     Time = 1,
     Image = DefaultImage,
     Reward = [{ Stat: "nothingness", Amount: 0 }];
+
+  function handleFinish(e) {
+    Object.keys(Reward).forEach((rewardType) => {
+      Reward[rewardType].forEach((reward) => {
+        RewardFunctions[rewardType](reward.Stat, reward.Amount);
+      });
+    });
+  }
+
+  function rendered() {
+    return {
+      update(Active) {
+        console.log(Active);
+      },
+    };
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -18,6 +38,7 @@
   on:click={() => {
     DOING.do($$props.id);
   }}
+  use:rendered={Active}
 >
   <div
     class="h-1/5 bg-black bg-opacity-20 flex px-4 gap-2 shadow-[0px_0px_12px_0px_rgba(255,255,255,.25)]"
@@ -36,5 +57,5 @@
       class="w-24 aspect-auto object-cover"
     />
   </div>
-  <ProgressBar {Time} Active={$DOING == $$props.id && true} {Reward} />
+  <ProgressBar {Time} {Active} on:actionFinish={handleFinish} />
 </div>
