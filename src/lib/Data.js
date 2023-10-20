@@ -1,18 +1,8 @@
 import { writable } from "svelte/store";
+import GameData from "$lib/Data.json"
 
 function stats() {
-    const { subscribe, set, update } = writable({
-        vitality: {
-            level: 1,
-            xp: 0,
-            xpNeed: 100
-        },
-        strength: {
-            level: 1,
-            xp: 0,
-            xpNeed: 100
-        }
-    })
+    const { subscribe, set, update } = writable(GameData.Player.Stats)
 
     return {
         subscribe,
@@ -20,16 +10,16 @@ function stats() {
         update,
         gainXp: (stat, amount) => {
             update((n) => {
-                if (amount < 0 && n[stat].xp == 0) return n
-                n[stat].xp += amount
+                if (amount < 0 && n[stat].Experience == 0) return n
+                n[stat].Experience += amount
                 return n
             })
         },
         levelUp: (stat) => {
             update((n) => {
-                if (n[stat].xp >= n[stat].xpNeed) {
-                    n[stat].xp -= n[stat].xpNeed
-                    n[stat].level++
+                if (n[stat].Experience >= n[stat]["Experience Needed"]) {
+                    n[stat].Experience -= n[stat]["Experience Needed"]
+                    n[stat].Level++
                 }
                 return n
             })

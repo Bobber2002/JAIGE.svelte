@@ -4,6 +4,7 @@
   import GameData from "$lib/Data.json";
   let stats;
 
+  console.log($STATS);
   function showStats(e) {
     if (e.keyCode == 80) {
       if (stats.style.display == "none") return (stats.style.display = "block");
