@@ -8,10 +8,7 @@
   let Active = $DOING == $$props.id && true;
   $: Active = $DOING == $$props.id && true;
 
-  export let Name = "Action Name",
-    Time = 1,
-    Image = DefaultImage,
-    Reward = [{ Stat: "nothingness", Amount: 0 }];
+  export let data = new Object();
 
   function handleFinish(e) {
     Object.keys(Reward).forEach((rewardType) => {
@@ -20,42 +17,37 @@
       });
     });
   }
-
-  function rendered() {
-    return {
-      update(Active) {
-        console.log(Active);
-      },
-    };
-  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   id={$$props.id}
-  class="bg-gray-500 flex flex-col w-72 h-[12rem] rounded-md overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
+  class="bg-gray-500 flex flex-col h-full w-full rounded-md overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
   on:click={() => {
     DOING.do($$props.id);
   }}
-  use:rendered={Active}
 >
   <div
     class="h-1/5 bg-black bg-opacity-20 flex px-4 gap-2 shadow-[0px_0px_12px_0px_rgba(255,255,255,.25)]"
   >
     <h3 class="grow flex items-center text-xl whitespace-nowrap font-bold">
-      {Name}
+      {data.Name}
     </h3>
     <h4 class="flex items-center justify-end italic">
-      2xp / {Time}s
+      2xp / {data.Time}s
     </h4>
   </div>
   <div class="grow flex justify-between items-center p-4">
     <img
-      src={Image}
-      alt={Name + " image"}
+      src={data.Image}
+      alt={data.Name + " image"}
       class="w-24 aspect-auto object-cover"
     />
   </div>
-  <ProgressBar {Time} {Active} on:actionFinish={handleFinish} />
+  <ProgressBar
+    Time={data.Time}
+    Active={data.Active}
+    on:actionFinish={handleFinish}
+  />
 </div>
