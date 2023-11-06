@@ -9,20 +9,36 @@
           "Experience": [
             {
               "Stat": "Strength",
-              "Amount": 4
+              "Amount": 100
+            }
+          ]
+        },
+        "Requirements": {
+          "Stats": [
+            {
+              "Stat": "Strength",
+              "Amount": 1
             }
           ]
         }
       },
       {
-        "Name": "kill1",
+        "Name": "kill2",
         "Image": "https://res.cloudinary.com/practicaldev/image/fetch/s--OKGj_vhJ--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/285827/cdaa974c-cb9e-44cc-a155-fd44092a0462.png",
         "Time": 2,
         "Reward": {
           "Experience": [
             {
               "Stat": "Strength",
-              "Amount": 4
+              "Amount": 40
+            }
+          ]
+        },
+        "Requirements": {
+          "Stats": [
+            {
+              "Stat": "Strength",
+              "Amount": 3
             }
           ]
         }
