@@ -14,7 +14,7 @@
   on:click={handleClick}
 >
   <p
-    class="h-full aspect-square grid place-items-center rounded-full bg-white bg-opacity-30"
+    class="h-full aspect-square grid place-items-center rounded-full bg-white bg-opacity-10"
   >
     {Name[0]}
   </p>

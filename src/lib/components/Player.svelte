@@ -4,7 +4,7 @@
 
 <div class="flex flex-col">
   <div
-    class="w-full h-full grid gap-4 grid-cols-2 grid-rows-[repeat(4,1fr)] sm:grid-cols-7 sm:grid-rows-5 [&>*]:rounded-lg [&>*]:bg-gray-500"
+    class="w-full h-full grid gap-4 grid-cols-2 grid-rows-[repeat(4,1fr)] sm:grid-cols-7 sm:grid-rows-5 [&>*]:rounded-lg [&>*]:bg-primary"
   >
     <div
       class="bg-green-300 sm:col-span-2 sm:row-span-3 row-span-3 p-6 grid place-items-center"

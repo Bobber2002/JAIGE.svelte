@@ -41,7 +41,7 @@
   }
 </script>
 
-<div use:change={Active} class=" relative w-full h-2 bg-gray-400">
+<div use:change={Active} class=" relative w-full h-2 bg-black bg-opacity-20">
   <div bind:this={Bar} class="ProgressBar h-full absolute w-0" />
 </div>
 

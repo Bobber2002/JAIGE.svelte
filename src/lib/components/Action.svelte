@@ -16,7 +16,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   id={data.Name}
-  class="bg-gray-500 flex flex-col h-full w-full rounded-lg overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
+  class="bg-primary flex flex-col h-full w-full rounded-lg overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
   on:click={() => {
     DOING.set({ ...data });
     DOING.resetData();
