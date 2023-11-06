@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { readable, writable } from "svelte/store";
 import GameData from "$lib/Data.json"
 
 function stats() {
@@ -29,25 +29,42 @@ function stats() {
 }
 
 function doing() {
-    const { subscribe, set, update } = writable("nothing")
+    const { subscribe, set, update } = writable({ Doing: {}, Data: { Progress: "0%" } })
 
 
-    const _do = (a) => {
+    const _set = (x) => {
         update((n) => {
-            n != a ? n = a : n = "nothing"
+            n.Doing.Name != x.Name ? n.Doing = x : n.Doing = {}
             return n
         })
     }
+
+    const _setData = (x, y) => {
+        update((n) => {
+            n.Data[x] = y
+            return n
+        })
+    }
+
+    const _resetData = () => {
+        update((n) => {
+            n.Data = { Progress: "0%" }
+            return n
+        })
+    }
+
     return {
         subscribe,
         set,
         update,
-        do: (a) => _do(a)
+        set: _set,
+        setData: _setData,
+        resetData: _resetData,
     }
 }
 
 function page() {
-    const { subscribe, set, update } = writable("Hunt")
+    const { subscribe, set, update } = writable("Player")
 
     return {
         subscribe,
@@ -60,3 +77,4 @@ function page() {
 export const STATS = stats()
 export const DOING = doing()
 export const PAGE = page()
+export const VARIABLES = readable({ Tickrate: 50 })

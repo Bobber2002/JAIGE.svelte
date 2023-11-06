@@ -1,31 +1,26 @@
 <script>
-  import RewardFunctions from "./RewardFunctions.js";
   import { DOING } from "$lib/Data.js";
+  import { createEventDispatcher } from "svelte";
 
-  import DefaultImage from "$lib/images/512.png";
   import ProgressBar from "./ProgressBar.svelte";
-
-  let Active = $DOING == $$props.id && true;
-  $: Active = $DOING == $$props.id && true;
 
   export let data = new Object();
 
-  function handleFinish(e) {
-    Object.keys(Reward).forEach((rewardType) => {
-      Reward[rewardType].forEach((reward) => {
-        RewardFunctions[rewardType](reward.Stat, reward.Amount);
-      });
-    });
-  }
+  let Active = $DOING.Doing.Name == data.Name && true;
+  $: Active = $DOING.Doing.Name == data.Name && true;
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  id={$$props.id}
-  class="bg-gray-500 flex flex-col h-full w-full rounded-md overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
+  id={data.Name}
+  class="bg-gray-500 flex flex-col h-full w-full rounded-lg overflow-hidden text-gray-100 transition-transform hover:transform hover:cursor-pointer hover:scale-105 hover:shadow-[0_0_8px_6px_rgba(255,255,255,.25)]"
   on:click={() => {
-    DOING.do($$props.id);
+    DOING.set({ ...data });
+    DOING.resetData();
+    dispatch("actionSet");
   }}
 >
   <div
@@ -42,12 +37,9 @@
     <img
       src={data.Image}
       alt={data.Name + " image"}
+      draggable="false"
       class="w-24 aspect-auto object-cover"
     />
   </div>
-  <ProgressBar
-    Time={data.Time}
-    Active={data.Active}
-    on:actionFinish={handleFinish}
-  />
+  <ProgressBar Time={data.Time} {Active} />
 </div>

@@ -1,7 +1,11 @@
 <script>
   import GameData from "$lib/Data.json";
   import { createEventDispatcher } from "svelte";
-  import Item from "./Item.svelte";
+  import Navbar__Button from "./Navbar__Button.svelte";
+
+  const pages = ["Player", ...Object.keys(GameData.Actions)];
+
+  console.log(pages);
 
   const dispatch = createEventDispatcher();
 
@@ -56,8 +60,8 @@
     <h1 class="text-xl">Idle Game</h1>
   </div>
   <div class="grow flex flex-col gap-1 pt-1">
-    {#each Object.keys(GameData.Actions) as pageName}
-      <Item Icon Name={pageName} on:click={() => changePage(pageName)} />
+    {#each pages as page}
+      <Navbar__Button Icon Name={page} on:click={() => changePage(page)} />
     {/each}
     <button
       on:click={Toggle}

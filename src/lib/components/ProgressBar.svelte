@@ -1,17 +1,11 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  let Bar;
+  import { DOING, VARIABLES } from "$lib/Data.js";
 
+  let Bar;
   let countdown;
 
   export let Time = 5;
   export let Active;
-
-  const dispatch = createEventDispatcher();
-
-  function finished() {
-    dispatch("actionFinish", { state: "3" });
-  }
 
   function stop() {
     clearTimeout(countdown);
@@ -21,19 +15,15 @@
 
   function run() {
     if (!Active) return;
-    let cooldown = Time * 1000;
     countdown = setTimeout(function tick() {
-      if (Bar.style.width == "100%") {
-        finished();
+      if (Bar && Bar.style.width == "100%") {
         Bar.style.transition = "width 0s linear";
         Bar.style.width = "0%";
-        cooldown = 10;
-      } else {
-        Bar.style.transition = `width ${Time}s linear`;
-        Bar.style.width = "100%";
-        cooldown = Time * 1000 - 10;
+      } else if (Bar) {
+        Bar.style.transition = `width ${Time / $VARIABLES.Tickrate}s linear`;
+        Bar.style.width = $DOING.Data.Progress;
       }
-      countdown = setTimeout(tick, cooldown);
+      countdown = setTimeout(tick, $VARIABLES.Tickrate);
     }, 0);
   }
 
@@ -51,10 +41,7 @@
   }
 </script>
 
-<div
-  use:change={Active}
-  class=" relative w-full h-2 bg-gray-400"
->
+<div use:change={Active} class=" relative w-full h-2 bg-gray-400">
   <div bind:this={Bar} class="ProgressBar h-full absolute w-0" />
 </div>
 
@@ -62,8 +49,8 @@
   .ProgressBar {
     background-image: repeating-linear-gradient(
       65deg,
-      darkgreen 0 15px,
-      green 0 20px
+      rgb(0, 140, 0) 0 15px,
+      rgb(0, 160, 0) 0 20px
     );
     transition: width 1s linear;
   }
